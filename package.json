@@ -5,6 +5,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
+    "clean": "turbo run clean && rm -rf node_modules",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
@@ -17,7 +18,7 @@
   },
   "packageManager": "yarn@1.22.1",
   "workspaces":  [
-      "examples/*",
+      "apps/*",
       "packages/*"
   ]
 }

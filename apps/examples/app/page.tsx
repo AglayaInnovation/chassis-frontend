@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import { Button } from "@aglaya/ui/button";
 
 export default function Home() {
   return (
@@ -85,9 +86,9 @@ export default function Home() {
           <h2>
             Deploy <span>-&gt;</span>
           </h2>
-          <p>
+          <Button appName={""}>
             Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
+          </Button>
         </a>
       </div>
     </main>
