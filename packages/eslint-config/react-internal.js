@@ -1,17 +1,10 @@
-const { resolve } = require("node:path");
-
-const project = resolve(process.cwd(), "tsconfig.json");
-
-/*
- * This is a custom ESLint configuration for use with
- * internal (bundled by their consumer) libraries
- * that utilize React.
- */
+const baseConfig = require("./base");
 
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  extends: ["eslint:recommended", "turbo"],
-  plugins: ["only-warn"],
+  ...baseConfig,
+  extends: [...baseConfig.extends, "plugin:react/recommended"],
+  plugins: [...baseConfig.plugins, "react"],
   globals: {
     React: true,
     JSX: true,
@@ -19,21 +12,10 @@ module.exports = {
   env: {
     browser: true,
   },
-  settings: {
-    "import/resolver": {
-      typescript: {
-        project,
-      },
-    },
+  rules: {
+    ...baseConfig.rules,
+    // Add any React-specific rules here
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
   },
-  ignorePatterns: [
-    // Ignore dotfiles
-    ".*.js",
-    "node_modules/",
-    "dist/",
-  ],
-  overrides: [
-    // Force ESLint to detect .tsx files
-    { files: ["*.js?(x)", "*.ts?(x)"] },
-  ],
 };

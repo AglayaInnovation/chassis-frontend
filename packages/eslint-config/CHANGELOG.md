@@ -1,5 +1,50 @@
 # @aglaya/eslint-config
 
+## 0.4.0
+
+### Minor Changes
+
+- Remove vercel dependencies
+- Change how install dependecies
+- Remove dependecies
+- Change devDependecies to dependencie
+
+### Patch Changes
+
+- Add new rules
+
+## 0.3.0
+
+### Minor Changes
+
+- Change how install dependecies
+- Change devDependecies to dependencie
+
+### Patch Changes
+
+- Add new rules
+
+## 0.2.0
+
+### Minor Changes
+
+- Change how install dependecies
+- Change devDependecies to dependencie
+
+### Patch Changes
+
+- Add new rules
+
+## 0.1.0
+
+### Minor Changes
+
+- Change how install dependecies
+
+### Patch Changes
+
+- Add new rules
+
 ## 0.0.2
 
 ### Patch Changes

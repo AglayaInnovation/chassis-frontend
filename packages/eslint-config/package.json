@@ -1,6 +1,6 @@
 {
   "name": "@aglaya/eslint-config",
-  "version": "0.0.2",
+  "version": "0.4.0",
   "publishConfig": {
     "access": "public"
   },
@@ -13,19 +13,21 @@
     "aglaya"
   ],
   "files": [
+    "base.js",
     "library.js",
     "next.js",
     "react-internal.js"
   ],
   "devDependencies": {
+    "@changesets/cli": "^2.27.7",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "@typescript-eslint/parser": "^7.1.0",
-    "@vercel/style-guide": "^5.2.0",
-    "eslint-config-turbo": "^2.0.0",
-    "eslint-plugin-only-warn": "^1.1.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@changesets/cli": "^2.27.7"
+    "@next/eslint-plugin-next": "^15.0.1",
+    "eslint-config-turbo": "^2.2.3",
+    "eslint-plugin-only-warn": "^1.1.0",
+    "eslint-plugin-react": "^7.37.2"
   }
 }
