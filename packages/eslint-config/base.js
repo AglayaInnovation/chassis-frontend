@@ -1,15 +1,19 @@
-const { resolve } = require("node:path");
 
+const { resolve } = require("node:path");
 const project = resolve(process.cwd(), "tsconfig.json");
 
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
     extends: ["eslint:recommended", "turbo"],
-    plugins: ["only-warn"],
+    plugins: ["only-warn","import"],
     settings: {
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts", ".tsx"]
+        },
         "import/resolver": {
             typescript: {
                 project,
+                alwaysTryTypes: true
             },
         },
     },
@@ -21,6 +25,7 @@ module.exports = {
     ],
     rules: {
         "keyword-spacing": 2,
+        "import/no-unresolved": "off",
         "space-before-blocks": "error",
         "object-curly-spacing": ["error", "always"],
         "array-bracket-spacing": ["error", "always"],
@@ -39,17 +44,14 @@ module.exports = {
         semi: ["error", "always"],
         "no-cond-assign": ["error", "always"],
         "import/order": [
-            "error",
+            "warn",
             {
-                groups: [
-                    "builtin",
-                    "external",
-                    "internal",
-                    "parent",
-                    "sibling",
-                    "index",
-                ],
+                groups: ["builtin", "external", "internal", ["sibling", "parent"], "index", "unknown"],
                 "newlines-between": "always",
+                alphabetize: {
+                    order: "asc",
+                    caseInsensitive: true,
+                },
             },
         ],
         "no-multiple-empty-lines": [
