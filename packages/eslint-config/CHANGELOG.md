@@ -1,5 +1,11 @@
 # @aglaya/eslint-config
 
+## 1.1.0
+
+### Minor Changes
+
+- Refactorized package dependencies to simplify installation process. Users now only need to install eslint and typescript as peer dependencies.
+
 ## 1.0.0
 
 ### Major Changes
