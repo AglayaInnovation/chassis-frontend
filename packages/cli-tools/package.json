@@ -1,0 +1,30 @@
+{
+  "name": "cli-tools",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A CLI library for project management",
+  "main": "index.js",
+  "bin": {
+    "cli-library": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create": "node bin/cli.js create"
+  },
+  "keywords": [
+    "cli",
+    "library",
+    "project management"
+  ],
+  "author": "Monster50",
+  "license": "MIT",
+  "dependencies": {
+    "@aglaya/eslint-config": "*",
+    "commander": "^12.1.0",
+    "inquirer": "^12.0.1"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.9"
+  }
+}
