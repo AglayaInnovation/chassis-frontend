@@ -1,6 +1,6 @@
 {
-  "name": "cli-tools",
-  "version": "0.0.0",
+  "name": "@aglaya/cli-tools",
+  "version": "0.0.2",
   "private": true,
   "description": "A CLI library for project management",
   "main": "index.js",
@@ -9,7 +9,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "create": "node bin/cli.js create"
+    "create": "node bin/cli.js create",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "publish": "changeset publish"
   },
   "keywords": [
     "cli",
