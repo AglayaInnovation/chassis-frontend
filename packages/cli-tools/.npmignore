@@ -1,0 +1,29 @@
+# Development files
+.git
+.gitignore
+.npmignore
+
+# Test files
+test
+tests
+
+# Documentation
+docs
+
+# Build tools
+webpack.config.js
+babel.config.js
+
+# Editor files
+.vscode
+.idea
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Changesets
+.changeset

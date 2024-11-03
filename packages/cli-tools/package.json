@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "private": true,
   "description": "A CLI library for project management",
-  "main": "index.js",
+  "main": "src/index.js",
   "bin": {
     "cli-library": "./bin/cli.js"
   },
