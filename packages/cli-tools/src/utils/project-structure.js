@@ -1,4 +1,4 @@
-import { packageJsontailwindCss, htmlTailwindCss, tailwindCss, tailwindConfig, gitignore } from '../files';
+import { packageJsonTailwindCss, htmlTailwindCss, tailwindCss, tailwindConfig, gitignore } from '../files/index.js';
 export const htmlProjectStructure = (name, description) => ({
     'js': {
         'components': {
@@ -19,5 +19,5 @@ export const htmlProjectStructure = (name, description) => ({
     'index.html': htmlTailwindCss(name).trim(),
     '.gitignore': gitignore.trim(),
     'README.md': '# Project Documentation',
-    'package.json': JSON.stringify(packageJsontailwindCss(name,description), null, 2)
+    'package.json': JSON.stringify(packageJsonTailwindCss(name,description), null, 2)
 });
