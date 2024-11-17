@@ -4,8 +4,17 @@ const project = resolve(process.cwd(), "tsconfig.json");
 
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-    extends: ["eslint:recommended", "turbo"],
-    plugins: ["only-warn","import"],
+    extends: [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "turbo"
+    ],
+    parser: "@typescript-eslint/parser",
+    plugins: [
+        "@typescript-eslint",
+        "only-warn",
+        "import"
+    ],
     settings: {
         "import/parsers": {
             "@typescript-eslint/parser": [".ts", ".tsx"]
