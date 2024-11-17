@@ -1,5 +1,11 @@
 # @aglaya/eslint-config
 
+## 1.2.0
+
+### Minor Changes
+
+- Change library files
+
 ## 1.1.0
 
 ### Minor Changes
