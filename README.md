@@ -1,26 +1,18 @@
-# Turborepo starter
+# Chassis Frontend
 
-This is an official starter Turborepo.
-
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
+A Turborepo monorepo for the Aglaya Innovation chassis frontend project.
 
 ## What's inside?
 
-This Turborepo includes the following packages/apps:
+This monorepo includes the following packages and apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `examples`: a [Next.js](https://nextjs.org/) app showcasing UI components
+- `@aglaya/ui`: a React component library with reusable UI components (button, card, code)
+- `@aglaya/cli-tools`: CLI tools for project management
+- `@aglaya/eslint-config`: shared ESLint configurations
+- `@aglaya/typescript-config`: shared TypeScript configurations
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
@@ -32,22 +24,36 @@ This Turborepo has some additional tools already setup for you:
 - [ESLint](https://eslint.org/) for code linting
 - [Prettier](https://prettier.io) for code formatting
 
+## Getting Started
+
+### Installation
+
+```sh
+yarn install
+```
+
+### Development
+
+To develop all apps and packages:
+
+```sh
+yarn dev
+```
+
 ### Build
 
-To build all apps and packages, run the following command:
+To build all apps and packages:
 
+```sh
+yarn build
 ```
-cd my-turborepo
-pnpm build
-```
 
-### Develop
+### Lint
 
-To develop all apps and packages, run the following command:
+To lint all packages:
 
-```
-cd my-turborepo
-pnpm dev
+```sh
+yarn lint
 ```
 
 ### Remote Caching

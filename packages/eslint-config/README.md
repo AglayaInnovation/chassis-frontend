@@ -26,7 +26,7 @@ To use these configurations, create an `.eslintrc.js` file in your project root 
 
 ```javascript
 module.exports = {
-  extends: ['@aglaya/eslint-config/next'],
+  extends: ["@aglaya/eslint-config/next"],
   // Add any project-specific overrides here
 };
 ```
@@ -35,7 +35,7 @@ module.exports = {
 
 ```javascript
 module.exports = {
-  extends: ['@aglaya/eslint-config/library'],
+  extends: ["@aglaya/eslint-config/library"],
   // Add any project-specific overrides here
 };
 ```
@@ -44,7 +44,7 @@ module.exports = {
 
 ```javascript
 module.exports = {
-  extends: ['@aglaya/eslint-config/react-internal'],
+  extends: ["@aglaya/eslint-config/react-internal"],
   // Add any project-specific overrides here
 };
 ```
@@ -55,11 +55,11 @@ You can extend or override any rules in your project's `.eslintrc.js` file. For 
 
 ```javascript
 module.exports = {
-  extends: ['@aglaya/eslint-config/next'],
+  extends: ["@aglaya/eslint-config/next"],
   rules: {
     // Override or add additional rules here
-    'no-console': 'warn',
-    'react/prop-types': 'off',
+    "no-console": "warn",
+    "react/prop-types": "off",
   },
 };
 ```
@@ -88,6 +88,8 @@ If you'd like to contribute to this ESLint configuration, please submit a pull r
 ## License
 
 This project is licensed under the MIT License.
+
 ```
 
 This README provides a comprehensive guide for users to implement and extend your ESLint configuration. It includes installation instructions, usage examples for different project types, information on how to extend the configuration, TypeScript support details, troubleshooting tips, and contribution guidelines.
+```

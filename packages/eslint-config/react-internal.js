@@ -12,6 +12,12 @@ module.exports = {
   env: {
     browser: true,
   },
+  settings: {
+    ...baseConfig.settings,
+    react: {
+      version: "detect",
+    },
+  },
   rules: {
     ...baseConfig.rules,
     // Add any React-specific rules here
