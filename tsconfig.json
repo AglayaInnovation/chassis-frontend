@@ -1,0 +1,14 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/examples"
+    },
+    {
+      "path": "./packages/api-core"
+    },
+    {
+      "path": "./packages/ui"
+    }
+  ]
+}

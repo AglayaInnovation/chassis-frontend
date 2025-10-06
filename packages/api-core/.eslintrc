@@ -1,0 +1,6 @@
+{
+  "extends": "@aglaya/eslint-config/library.js",
+  "parserOptions": {
+    "project": true
+  }
+}
