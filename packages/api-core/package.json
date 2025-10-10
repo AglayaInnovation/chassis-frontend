@@ -1,6 +1,6 @@
 {
   "name": "@aglaya/api-core",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A flexible and type-safe HTTP client library for both browser and Node.js environments",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
