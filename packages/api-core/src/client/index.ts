@@ -1,75 +1,76 @@
-import type { ApiResponse, RequestConfig, RequestOptions } from "../types";
+import { processRequest } from "../core/requestProcessor";
+import type { ApiResponse, RequestConfig, FetchOptions, HttpMethod, JSONTypes, Authentication } from "../types";
 
 export class ApiClient {
   private baseURL: string;
   private headers: Record<string, string>;
   private timeout: number;
-  private retries: number;
-  private retryDelay: number;
+  private authentication?: Authentication;
+  private defaultOptions?: RequestConfig["options"];
 
   constructor(config: RequestConfig = {}) {
     this.baseURL = config.baseURL || "";
     this.headers = config.headers || {};
     this.timeout = config.timeout || 30000;
-    this.retries = config.retries || 3;
-    this.retryDelay = config.retryDelay || 1000;
+    this.authentication = config.authentication;
+    this.defaultOptions = config.options;
   }
 
-  async request<T>(url: string, options: RequestOptions): Promise<ApiResponse<T>> {
-    const fullURL = `${this.baseURL}${url}`;
+  setAuthentication(authentication: Authentication): void {
+    this.authentication = authentication;
+  }
 
-    const response = await fetch(fullURL, {
-      method: options.method,
-      headers: {
-        ...this.headers,
-        ...options.headers,
-        "Content-Type": "application/json",
+  private async performRequest<T>(
+    method: HttpMethod,
+    url: string,
+    fetchOptions: Partial<FetchOptions> = {}
+  ): Promise<ApiResponse<T>> {
+    return processRequest<T>(
+      {
+        method,
+        url,
+        baseURL: this.baseURL,
+        defaultHeaders: this.headers,
+        defaultOptions: this.defaultOptions,
+        defaultAuthentication: this.authentication,
       },
-      body: options.body ? JSON.stringify(options.body) : undefined,
-    });
-
-    const data = (await response.json()) as T;
-
-    const headers: Record<string, string> = {};
-    response.headers.forEach((value, key) => {
-      headers[key] = value;
-    });
-
-    return {
-      data,
-      status: response.status,
-      statusText: response.statusText,
-      headers,
-    };
+      {
+        headers: fetchOptions.headers,
+        params: fetchOptions.params,
+        body: fetchOptions.body,
+        mode: fetchOptions.mode,
+        options: fetchOptions.options,
+        authentication: fetchOptions.authentication,
+      }
+    );
   }
 
-  async get<T>(url: string, options: Partial<RequestOptions> = {}): Promise<ApiResponse<T>> {
-    return this.request<T>(url, {
-      ...options,
-      method: "GET",
-    });
+  async get<T>(url: string, options: Partial<FetchOptions> = {}): Promise<ApiResponse<T>> {
+    return this.performRequest<T>("GET", url, options);
   }
 
-  async post<T>(url: string, body?: unknown, options: Partial<RequestOptions> = {}): Promise<ApiResponse<T>> {
-    return this.request<T>(url, {
+  async post<T>(url: string, body?: FormData | JSONTypes, options: Partial<FetchOptions> = {}): Promise<ApiResponse<T>> {
+    return this.performRequest<T>("POST", url, {
       ...options,
-      method: "POST",
       body,
     });
   }
 
-  async put<T>(url: string, body?: unknown, options: Partial<RequestOptions> = {}): Promise<ApiResponse<T>> {
-    return this.request<T>(url, {
+  async put<T>(url: string, body?: FormData | JSONTypes, options: Partial<FetchOptions> = {}): Promise<ApiResponse<T>> {
+    return this.performRequest<T>("PUT", url, {
       ...options,
-      method: "PUT",
       body,
     });
   }
 
-  async delete<T>(url: string, options: Partial<RequestOptions> = {}): Promise<ApiResponse<T>> {
-    return this.request<T>(url, {
+  async patch<T>(url: string, body?: FormData | JSONTypes, options: Partial<FetchOptions> = {}): Promise<ApiResponse<T>> {
+    return this.performRequest<T>("PATCH", url, {
       ...options,
-      method: "DELETE",
+      body,
     });
+  }
+
+  async delete<T>(url: string, options: Partial<FetchOptions> = {}): Promise<ApiResponse<T>> {
+    return this.performRequest<T>("DELETE", url, options);
   }
 }
