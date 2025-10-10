@@ -1,7 +1,10 @@
 export type Primitive = number | string | boolean | null | undefined;
-export type JSONObject = { [k: string]: JSONTypes };
-export type JSONArray = JSONTypes[];
-export type JSONTypes = JSONArray | JSONObject | Primitive;
+export type JSONValue = Primitive | JSONObject | JSONArray;
+export interface JSONObject {
+  [key: string]: JSONValue;
+}
+export interface JSONArray extends Array<JSONValue> {}
+export type JSONTypes = JSONValue;
 
 export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 export type RequestMode = "cors" | "navigate" | "no-cors" | "same-origin";

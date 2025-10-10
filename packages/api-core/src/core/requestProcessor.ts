@@ -1,14 +1,13 @@
-import { adaptFetchConfig } from "./adapter";
 import { ApiError } from "../errors";
-import type { ApiResponse, RequestOptions, Authentication, HttpMethod, JSONTypes } from "../types";
-import {
-  validationAuth,
-  withRetry,
-  mergeRetryOptions,
-  formatHeaders,
-  formatQueryParams,
-  formatBody,
-} from "../utils";
+import type {
+  ApiResponse,
+  RequestOptions,
+  Authentication,
+  HttpMethod,
+  JSONTypes,
+} from "../types";
+import { withRetry, mergeRetryOptions } from "../utils";
+import { fetchCore } from "../utils/settings";
 
 const MIN_ATTEMPTS = 1;
 
@@ -39,43 +38,25 @@ export async function processRequest<T>(
     ...input.options,
   };
 
-  const authentication: Authentication = {
-    ...context.defaultAuthentication,
-    ...input.authentication,
-  };
-
-  // Validate authentication
-  validationAuth(options, authentication);
-
-  // Build full URL with query params
-  const queryString = formatQueryParams(input.params);
+  // Build URL for logging purposes
   const baseURL = context.baseURL || "";
-  const fullURL = `${baseURL}${context.url}${queryString}`;
-
-  // Format headers
-  const requestHeaders = formatHeaders(
-    {
-      ...context.defaultHeaders,
-      ...input.headers,
-    },
-    authentication,
-    options
-  );
-
-  // Format body
-  const requestBody = (context.method === "POST" || context.method === "PUT" || context.method === "PATCH")
-    ? formatBody(input.body)
-    : undefined;
+  const url = `${baseURL}${context.url}`;
 
   const fetchOperation = async (): Promise<Response> => {
-    const fetchConfig = adaptFetchConfig({
+    return fetchCore({
       method: context.method,
-      headers: requestHeaders,
-      body: requestBody,
+      url: context.url,
+      baseURL: context.baseURL,
+      defaultHeaders: context.defaultHeaders,
+      defaultOptions: context.defaultOptions,
+      defaultAuthentication: context.defaultAuthentication,
+      headers: input.headers,
+      params: input.params,
+      body: input.body,
       mode: input.mode,
+      options: input.options,
+      authentication: input.authentication,
     });
-
-    return fetch(fullURL, fetchConfig);
   };
 
   let response: Response;
@@ -89,7 +70,9 @@ export async function processRequest<T>(
       MIN_ATTEMPTS,
       (attempt, error) => {
         // eslint-disable-next-line no-console
-        console.warn(`Retry attempt ${attempt} for ${context.method} ${fullURL}: ${error.message}`);
+        console.warn(
+          `Retry attempt ${attempt} for ${context.method} ${url}: ${error.message}`
+        );
       }
     );
   } else {

@@ -42,6 +42,15 @@ export default function Home(): JSX.Element {
       </div>
 
       <div className={styles.grid}>
+        <a href="/api-demo" className={styles.card}>
+          <h2>
+            API Core Demo <span>-&gt;</span>
+          </h2>
+          <p>
+            See @aglaya/api-core in action with live HTTP request examples.
+          </p>
+        </a>
+
         <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
           className={styles.card}

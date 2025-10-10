@@ -1,76 +1,70 @@
 import { processRequest } from "../core/requestProcessor";
-import type { ApiResponse, RequestConfig, FetchOptions, HttpMethod, JSONTypes, Authentication } from "../types";
+import type { ApiResponse, HttpMethod, JSONTypes, Authentication, RequestOptions } from "../types";
+
+export interface ApiClientConfig {
+  baseURL: string;
+  timeout?: number;
+  contentType?: string;
+}
+
+export interface MethodOptions {
+  headers?: Record<string, string>;
+  params?: Record<string, string | number | boolean>;
+  body?: FormData | JSONTypes;
+  authentication?: Authentication;
+  options?: RequestOptions;
+}
 
 export class ApiClient {
   private baseURL: string;
-  private headers: Record<string, string>;
-  private timeout: number;
-  private authentication?: Authentication;
-  private defaultOptions?: RequestConfig["options"];
+  private defaultHeaders: Record<string, string>;
 
-  constructor(config: RequestConfig = {}) {
-    this.baseURL = config.baseURL || "";
-    this.headers = config.headers || {};
-    this.timeout = config.timeout || 30000;
-    this.authentication = config.authentication;
-    this.defaultOptions = config.options;
+  constructor(config: ApiClientConfig) {
+    this.baseURL = config.baseURL;
+    this.defaultHeaders = {
+      "Content-Type": config.contentType || "application/json",
+    };
   }
 
-  setAuthentication(authentication: Authentication): void {
-    this.authentication = authentication;
-  }
-
-  private async performRequest<T>(
+  private async request<T>(
     method: HttpMethod,
     url: string,
-    fetchOptions: Partial<FetchOptions> = {}
+    config: MethodOptions = {}
   ): Promise<ApiResponse<T>> {
     return processRequest<T>(
       {
         method,
         url,
         baseURL: this.baseURL,
-        defaultHeaders: this.headers,
-        defaultOptions: this.defaultOptions,
-        defaultAuthentication: this.authentication,
+        defaultHeaders: this.defaultHeaders,
       },
       {
-        headers: fetchOptions.headers,
-        params: fetchOptions.params,
-        body: fetchOptions.body,
-        mode: fetchOptions.mode,
-        options: fetchOptions.options,
-        authentication: fetchOptions.authentication,
+        headers: config.headers,
+        params: config.params,
+        body: config.body,
+        authentication: config.authentication,
+        options: config.options,
       }
     );
   }
 
-  async get<T>(url: string, options: Partial<FetchOptions> = {}): Promise<ApiResponse<T>> {
-    return this.performRequest<T>("GET", url, options);
+  async get<T>(url: string, config?: MethodOptions): Promise<ApiResponse<T>> {
+    return this.request<T>("GET", url, config);
   }
 
-  async post<T>(url: string, body?: FormData | JSONTypes, options: Partial<FetchOptions> = {}): Promise<ApiResponse<T>> {
-    return this.performRequest<T>("POST", url, {
-      ...options,
-      body,
-    });
+  async post<T>(url: string, config?: MethodOptions): Promise<ApiResponse<T>> {
+    return this.request<T>("POST", url, config);
   }
 
-  async put<T>(url: string, body?: FormData | JSONTypes, options: Partial<FetchOptions> = {}): Promise<ApiResponse<T>> {
-    return this.performRequest<T>("PUT", url, {
-      ...options,
-      body,
-    });
+  async put<T>(url: string, config?: MethodOptions): Promise<ApiResponse<T>> {
+    return this.request<T>("PUT", url, config);
   }
 
-  async patch<T>(url: string, body?: FormData | JSONTypes, options: Partial<FetchOptions> = {}): Promise<ApiResponse<T>> {
-    return this.performRequest<T>("PATCH", url, {
-      ...options,
-      body,
-    });
+  async patch<T>(url: string, config?: MethodOptions): Promise<ApiResponse<T>> {
+    return this.request<T>("PATCH", url, config);
   }
 
-  async delete<T>(url: string, options: Partial<FetchOptions> = {}): Promise<ApiResponse<T>> {
-    return this.performRequest<T>("DELETE", url, options);
+  async delete<T>(url: string, config?: MethodOptions): Promise<ApiResponse<T>> {
+    return this.request<T>("DELETE", url, config);
   }
 }
