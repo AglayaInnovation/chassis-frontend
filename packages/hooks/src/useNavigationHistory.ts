@@ -1,8 +1,8 @@
-import { createLogger } from "@aglaya/logger";
+import { createLogger, type Logger } from "@aglaya/logger";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 
-const logger = createLogger({ prefix: "useNavigationHistory" });
+const logger: Logger = createLogger({ prefix: "useNavigationHistory" });
 
 export interface NavigationHistoryItem {
   path: string;

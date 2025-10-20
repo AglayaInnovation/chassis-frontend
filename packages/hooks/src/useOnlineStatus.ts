@@ -1,7 +1,7 @@
-import { createLogger } from "@aglaya/logger";
+import { createLogger, type Logger } from "@aglaya/logger";
 import { useEffect, useState, useSyncExternalStore } from "react";
 
-const logger = createLogger({ prefix: "useOnlineStatus" });
+const logger: Logger = createLogger({ prefix: "useOnlineStatus" });
 
 export interface UseOnlineStatusOptions {
   /**

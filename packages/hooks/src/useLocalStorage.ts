@@ -1,7 +1,7 @@
-import { createLogger } from "@aglaya/logger";
+import { createLogger, type Logger } from "@aglaya/logger";
 import { useState, useEffect, useCallback, Dispatch, SetStateAction } from "react";
 
-const logger = createLogger({ prefix: "useLocalStorage" });
+const logger: Logger = createLogger({ prefix: "useLocalStorage" });
 
 /**
  * Hook that syncs state with localStorage. Automatically saves to localStorage
