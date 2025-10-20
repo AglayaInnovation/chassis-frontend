@@ -2,5 +2,6 @@
   "extends": ["@aglaya/eslint-config/react-internal.js"],
   "parserOptions": {
     "project": true
-  }
+  },
+  "ignorePatterns": ["*.config.js", "*.config.cjs", "jest.config.*"]
 }

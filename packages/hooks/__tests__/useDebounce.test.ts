@@ -1,4 +1,5 @@
 import { renderHook, waitFor } from "@testing-library/react";
+
 import { useDebounce } from "../src/useDebounce";
 
 describe("useDebounce", () => {
@@ -20,14 +21,16 @@ describe("useDebounce", () => {
     const { result, rerender } = renderHook(
       ({ value, delay }) => useDebounce(value, delay),
       {
-        initialProps: { value: "initial", delay: 500 },
+        initialProps: { value: "initial",
+          delay: 500 },
       }
     );
 
     expect(result.current).toBe("initial");
 
     // Update value
-    rerender({ value: "updated", delay: 500 });
+    rerender({ value: "updated",
+      delay: 500 });
 
     // Should still show old value
     expect(result.current).toBe("initial");
@@ -68,11 +71,13 @@ describe("useDebounce", () => {
     const { result, rerender } = renderHook(
       ({ value, delay }) => useDebounce(value, delay),
       {
-        initialProps: { value: "test", delay: 1000 },
+        initialProps: { value: "test",
+          delay: 1000 },
       }
     );
 
-    rerender({ value: "updated", delay: 1000 });
+    rerender({ value: "updated",
+      delay: 1000 });
 
     jest.advanceTimersByTime(500);
     expect(result.current).toBe("test");

@@ -82,7 +82,7 @@ export function useOnlineStatus(
     () => true // Server-side rendering fallback
   );
 
-  const [isReallyOnline, setIsReallyOnline] = useState(isOnline);
+  const [ isReallyOnline, setIsReallyOnline ] = useState(isOnline);
 
   useEffect(() => {
     if (!enablePolling || !checkUrl) {
@@ -125,7 +125,7 @@ export function useOnlineStatus(
         clearInterval(intervalId);
       }
     };
-  }, [isOnline, enablePolling, pollingInterval, checkUrl]);
+  }, [ isOnline, enablePolling, pollingInterval, checkUrl ]);
 
   const finalStatus = enablePolling && checkUrl ? isReallyOnline : isOnline;
 
