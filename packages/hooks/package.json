@@ -1,0 +1,87 @@
+{
+  "name": "@aglaya/hooks",
+  "version": "0.0.1",
+  "description": "React custom hooks library",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./useDebounce": {
+      "types": "./dist/useDebounce.d.ts",
+      "import": "./dist/useDebounce.mjs",
+      "require": "./dist/useDebounce.js"
+    },
+    "./useLocalStorage": {
+      "types": "./dist/useLocalStorage.d.ts",
+      "import": "./dist/useLocalStorage.mjs",
+      "require": "./dist/useLocalStorage.js"
+    },
+    "./useClickOutside": {
+      "types": "./dist/useClickOutside.d.ts",
+      "import": "./dist/useClickOutside.mjs",
+      "require": "./dist/useClickOutside.js"
+    },
+    "./useMedia": {
+      "types": "./dist/useMedia.d.ts",
+      "import": "./dist/useMedia.mjs",
+      "require": "./dist/useMedia.js"
+    },
+    "./usePrevious": {
+      "types": "./dist/usePrevious.d.ts",
+      "import": "./dist/usePrevious.mjs",
+      "require": "./dist/usePrevious.js"
+    },
+    "./useNavigationHistory": {
+      "types": "./dist/useNavigationHistory.d.ts",
+      "import": "./dist/useNavigationHistory.mjs",
+      "require": "./dist/useNavigationHistory.js"
+    },
+    "./useOnlineStatus": {
+      "types": "./dist/useOnlineStatus.d.ts",
+      "import": "./dist/useOnlineStatus.mjs",
+      "require": "./dist/useOnlineStatus.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@aglaya/eslint-config": "*",
+    "@aglaya/typescript-config": "*",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^18.2.61",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "tsup": "^8.0.1",
+    "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "next": "^14.0.0 || ^15.0.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@aglaya/api-core": "*"
+  }
+}

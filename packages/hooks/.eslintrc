@@ -1,0 +1,6 @@
+{
+  "extends": ["@aglaya/eslint-config/react-internal.js"],
+  "parserOptions": {
+    "project": true
+  }
+}

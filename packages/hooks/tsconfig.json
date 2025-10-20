@@ -1,0 +1,9 @@
+{
+  "extends": "@aglaya/typescript-config/react-library.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "."
+  },
+  "include": ["src", "*.ts"],
+  "exclude": ["node_modules", "dist", "__tests__"]
+}
