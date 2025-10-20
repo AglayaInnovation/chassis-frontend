@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 import { createLogger, type Logger } from "@aglaya/logger";
 import { useState, useEffect, useCallback, Dispatch, SetStateAction } from "react";
 
