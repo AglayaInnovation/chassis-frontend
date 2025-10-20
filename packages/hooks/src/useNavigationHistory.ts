@@ -1,5 +1,8 @@
+import { createLogger } from "@aglaya/logger";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
+
+const logger = createLogger({ prefix: "useNavigationHistory" });
 
 export interface NavigationHistoryItem {
   path: string;
@@ -92,6 +95,7 @@ export function useNavigationHistory(
 
   const clearHistory = useCallback(() => {
     setHistory([]);
+    logger.info("Navigation history cleared");
   }, []);
 
   return {

@@ -1,0 +1,7 @@
+{
+  "extends": ["@aglaya/eslint-config/library.js"],
+  "parserOptions": {
+    "project": true
+  },
+  "ignorePatterns": ["*.config.ts", "*.config.js", "*.config.cjs"]
+}

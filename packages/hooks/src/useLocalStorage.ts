@@ -1,4 +1,7 @@
+import { createLogger } from "@aglaya/logger";
 import { useState, useEffect, useCallback, Dispatch, SetStateAction } from "react";
+
+const logger = createLogger({ prefix: "useLocalStorage" });
 
 /**
  * Hook that syncs state with localStorage. Automatically saves to localStorage
@@ -36,7 +39,7 @@ export function useLocalStorage<T>(
       const item = window.localStorage.getItem(key);
       return item ? (JSON.parse(item) as T) : initialValue;
     } catch (error) {
-      console.warn(`Error reading localStorage key "${key}":`, error);
+      logger.warn(`Failed to read localStorage key "${key}"`, error);
       return initialValue;
     }
   });
@@ -55,7 +58,7 @@ export function useLocalStorage<T>(
           window.localStorage.setItem(key, JSON.stringify(valueToStore));
         }
       } catch (error) {
-        console.warn(`Error setting localStorage key "${key}":`, error);
+        logger.error(`Failed to set localStorage key "${key}"`, error);
       }
     },
     [ key, storedValue ]
@@ -68,7 +71,7 @@ export function useLocalStorage<T>(
         try {
           setStoredValue(JSON.parse(e.newValue) as T);
         } catch (error) {
-          console.warn(`Error parsing localStorage value for key "${key}":`, error);
+          logger.warn(`Failed to parse localStorage value for key "${key}"`, error);
         }
       }
     };

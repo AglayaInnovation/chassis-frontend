@@ -14,7 +14,7 @@
     "aglaya-cli": "./bin/cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"No tests for cli-tools\"",
     "create": "node bin/cli.js create",
     "changeset": "changeset",
     "version": "changeset version",

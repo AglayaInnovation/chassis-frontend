@@ -1,4 +1,7 @@
+import { createLogger } from "@aglaya/logger";
 import { useEffect, useState, useSyncExternalStore } from "react";
+
+const logger = createLogger({ prefix: "useOnlineStatus" });
 
 export interface UseOnlineStatusOptions {
   /**
@@ -90,9 +93,7 @@ export function useOnlineStatus(
       return;
     }
 
-    let intervalId: NodeJS.Timeout;
-
-    const checkConnectivity = async () => {
+    const checkConnectivity = async (): Promise<void> => {
       try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000);
@@ -105,8 +106,11 @@ export function useOnlineStatus(
 
         clearTimeout(timeoutId);
         setIsReallyOnline(true);
+        logger.debug("Connectivity check successful", { url: checkUrl });
       } catch (error) {
         setIsReallyOnline(false);
+        logger.warn("Connectivity check failed", { url: checkUrl,
+          error });
       }
     };
 
@@ -118,7 +122,7 @@ export function useOnlineStatus(
     }
 
     // Set up polling
-    intervalId = setInterval(checkConnectivity, pollingInterval);
+    const intervalId = setInterval(checkConnectivity, pollingInterval);
 
     return () => {
       if (intervalId) {

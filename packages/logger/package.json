@@ -1,0 +1,32 @@
+{
+  "name": "@aglaya/logger",
+  "version": "0.0.1",
+  "description": "Lightweight logging utility for browser and Node.js",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint . --max-warnings 0",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@aglaya/eslint-config": "*",
+    "@aglaya/typescript-config": "*",
+    "eslint": "^8.57.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.5.3"
+  }
+}

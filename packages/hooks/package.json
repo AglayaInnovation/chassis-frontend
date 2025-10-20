@@ -82,6 +82,7 @@
     }
   },
   "dependencies": {
-    "@aglaya/api-core": "*"
+    "@aglaya/api-core": "*",
+    "@aglaya/logger": "*"
   }
 }
