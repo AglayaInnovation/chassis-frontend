@@ -1,10 +1,5 @@
 "use client";
 
-import { useState, useRef } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, Wifi, WifiOff } from "lucide-react";
-
 import {
   useDebounce,
   useLocalStorage,
@@ -14,21 +9,26 @@ import {
   useNavigationHistory,
   useOnlineStatus,
 } from "@aglaya/hooks";
+import { ArrowLeft, Wifi, WifiOff } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState, useRef } from "react";
+
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function HooksDemoPage(): JSX.Element {
   const router = useRouter();
 
   // useDebounce demo
-  const [searchTerm, setSearchTerm] = useState("");
+  const [ searchTerm, setSearchTerm ] = useState("");
   const debouncedSearch = useDebounce(searchTerm, 500);
 
   // useLocalStorage demo
-  const [name, setName] = useLocalStorage("demo-name", "");
+  const [ name, setName ] = useLocalStorage("demo-name", "");
 
   // useClickOutside demo
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [ isDropdownOpen, setIsDropdownOpen ] = useState(false);
   useClickOutside(dropdownRef, () => setIsDropdownOpen(false));
 
   // useMedia demo
@@ -37,7 +37,7 @@ export default function HooksDemoPage(): JSX.Element {
   const isDesktop = useMedia("(min-width: 1025px)");
 
   // usePrevious demo
-  const [count, setCount] = useState(0);
+  const [ count, setCount ] = useState(0);
   const previousCount = usePrevious(count);
 
   // useNavigationHistory demo

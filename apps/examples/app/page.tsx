@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { Code2, Webhook, Gauge } from "lucide-react";
+import Link from "next/link";
+
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Home(): JSX.Element {

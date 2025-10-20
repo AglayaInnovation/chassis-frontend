@@ -1,20 +1,21 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
 import { ArrowLeft, Loader2, CheckCircle2, XCircle, List, FileText, PlusCircle } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
-import { getPosts, getPost, createPost, type Post } from "../api/client";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-export default function ApiDemo(): JSX.Element {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [singlePost, setSinglePost] = useState<Post | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [lastAction, setLastAction] = useState<string>("");
+import { getPosts, getPost, createPost, type Post } from "../api/client";
 
-  const handleGetPosts = async () => {
+export default function ApiDemo(): JSX.Element {
+  const [ posts, setPosts ] = useState<Post[]>([]);
+  const [ singlePost, setSinglePost ] = useState<Post | null>(null);
+  const [ loading, setLoading ] = useState(false);
+  const [ error, setError ] = useState<string | null>(null);
+  const [ lastAction, setLastAction ] = useState<string>("");
+
+  const handleGetPosts = async (): Promise<void> => {
     setLoading(true);
     setError(null);
     setLastAction("Fetching posts list...");
@@ -31,7 +32,7 @@ export default function ApiDemo(): JSX.Element {
     }
   };
 
-  const handleGetPost = async () => {
+  const handleGetPost = async (): Promise<void> => {
     setLoading(true);
     setError(null);
     setLastAction("Fetching single post...");
@@ -48,7 +49,7 @@ export default function ApiDemo(): JSX.Element {
     }
   };
 
-  const handleCreatePost = async () => {
+  const handleCreatePost = async (): Promise<void> => {
     setLoading(true);
     setError(null);
     setLastAction("Creating new post...");

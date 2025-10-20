@@ -1,4 +1,4 @@
-import { ApiClient } from "@aglaya/api-core";
+import { ApiClient, type ApiResponse } from "@aglaya/api-core";
 
 // Example API client for JSONPlaceholder
 const client = new ApiClient({
@@ -7,21 +7,21 @@ const client = new ApiClient({
 });
 
 // Example: Get all posts
-export const getPosts = () => client.get<Post[]>("/posts");
+export const getPosts = (): Promise<ApiResponse<Post[]>> => client.get<Post[]>("/posts");
 
 // Example: Get a single post
-export const getPost = (id: number) => client.get<Post>(`/posts/${id}`);
+export const getPost = (id: number): Promise<ApiResponse<Post>> => client.get<Post>(`/posts/${id}`);
 
 // Example: Create a new post
-export const createPost = (data: CreatePostInput) =>
+export const createPost = (data: CreatePostInput): Promise<ApiResponse<Post>> =>
   client.post<Post>("/posts", { body: data });
 
 // Example: Update a post
-export const updatePost = (id: number, data: UpdatePostInput) =>
+export const updatePost = (id: number, data: UpdatePostInput): Promise<ApiResponse<Post>> =>
   client.put<Post>(`/posts/${id}`, { body: data });
 
 // Example: Delete a post
-export const deletePost = (id: number) => client.delete(`/posts/${id}`);
+export const deletePost = (id: number): Promise<ApiResponse<void>> => client.delete(`/posts/${id}`);
 
 // Types
 export interface Post {
