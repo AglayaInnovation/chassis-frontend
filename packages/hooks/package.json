@@ -1,6 +1,6 @@
 {
   "name": "@aglaya/hooks",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "React custom hooks library",
   "license": "MIT",
   "publishConfig": {
