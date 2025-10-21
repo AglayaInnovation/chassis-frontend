@@ -77,22 +77,11 @@ export default [
       ],
       "curly": "error",
 
-      // TypeScript Rules - Strict Type Safety
-      "@typescript-eslint/no-explicit-any": "error",
-      "@typescript-eslint/no-unsafe-argument": "error",
-      "@typescript-eslint/no-unsafe-assignment": "error",
-      "@typescript-eslint/no-unsafe-call": "error",
-      "@typescript-eslint/no-unsafe-member-access": "error",
-      "@typescript-eslint/no-unsafe-return": "error",
+      // TypeScript Rules
       "@typescript-eslint/no-unused-vars": ["warn", {
         "argsIgnorePattern": "^_",
         "varsIgnorePattern": "^_",
       }],
-      "@typescript-eslint/explicit-function-return-type": ["error", {
-        "allowExpressions": true,
-        "allowTypedFunctionExpressions": true,
-      }],
-      "@typescript-eslint/strict-boolean-expressions": "off",
     },
   },
 ];

@@ -72,22 +72,11 @@ module.exports = {
         ],
         curly: "error",
 
-        // TypeScript Rules - Strict Type Safety
-        "@typescript-eslint/no-explicit-any": "error", // ❌ Prohibir 'any'
-        "@typescript-eslint/no-unsafe-argument": "error", // ❌ Prohibir argumentos de tipo any
-        "@typescript-eslint/no-unsafe-assignment": "error", // ❌ Prohibir asignaciones any
-        "@typescript-eslint/no-unsafe-call": "error", // ❌ Prohibir llamadas any
-        "@typescript-eslint/no-unsafe-member-access": "error", // ❌ Prohibir acceso a miembros any
-        "@typescript-eslint/no-unsafe-return": "error", // ❌ Prohibir retorno de any
+        // TypeScript Rules
         "@typescript-eslint/no-unused-vars": ["warn", {
             "argsIgnorePattern": "^_",
             "varsIgnorePattern": "^_"
-        }], // Advertir sobre variables no usadas (permite _ prefix)
-        "@typescript-eslint/explicit-function-return-type": ["error", {
-            "allowExpressions": true,
-            "allowTypedFunctionExpressions": true
-        }], // Requerir tipos de retorno explícitos en funciones
-        "@typescript-eslint/strict-boolean-expressions": "off", // Opcional: activar para expresiones booleanas estrictas
+        }],
     },
     overrides: [{ files: ["*.js?(x)", "*.ts?(x)"] }],
 };

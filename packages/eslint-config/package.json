@@ -25,12 +25,16 @@
       "import": "./base.mjs",
       "require": "./base.js"
     },
+    "./base.js": "./base.js",
     "./next": {
       "import": "./next.mjs",
       "require": "./next.js"
     },
+    "./next.js": "./next.js",
     "./library": "./library.js",
-    "./react-internal": "./react-internal.js"
+    "./library.js": "./library.js",
+    "./react-internal": "./react-internal.js",
+    "./react-internal.js": "./react-internal.js"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
