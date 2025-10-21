@@ -14,10 +14,24 @@
   ],
   "files": [
     "base.js",
+    "base.mjs",
     "library.js",
     "next.js",
+    "next.mjs",
     "react-internal.js"
   ],
+  "exports": {
+    "./base": {
+      "import": "./base.mjs",
+      "require": "./base.js"
+    },
+    "./next": {
+      "import": "./next.mjs",
+      "require": "./next.js"
+    },
+    "./library": "./library.js",
+    "./react-internal": "./react-internal.js"
+  },
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
     "typescript": "^5.3.3"
@@ -33,7 +47,7 @@
     "eslint-plugin-react": "^7.37.2"
   },
   "peerDependencies": {
-    "eslint": "^8.0.0",
+    "eslint": "^8.0.0 || ^9.0.0",
     "typescript": "^5.0.0"
   },
   "peerDependenciesMeta": {

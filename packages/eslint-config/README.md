@@ -2,6 +2,8 @@
 
 This package provides Aglaya's ESLint configurations as an extensible shared config.
 
+**Compatible with ESLint 8 and ESLint 9** (both legacy and flat config formats).
+
 ## Installation
 
 First, install the package along with its peer dependencies:
@@ -9,6 +11,13 @@ First, install the package along with its peer dependencies:
 ```bash
 npm install --save-dev @aglaya/eslint-config eslint@^8.0.0 typescript@^5.0.0
 yarn add --dev @aglaya/eslint-config eslint@^8.0.0 typescript@^5.0.0
+```
+
+For ESLint 9:
+
+```bash
+npm install --save-dev @aglaya/eslint-config eslint@^9.0.0 typescript@^5.0.0
+yarn add --dev @aglaya/eslint-config eslint@^9.0.0 typescript@^5.0.0
 ```
 
 ## Usage
@@ -20,9 +29,11 @@ Aglaya's ESLint config comes with several presets:
 - `next`: Configuration for Next.js projects
 - `react-internal`: Configuration for internal React projects
 
-To use these configurations, create an `.eslintrc.js` file in your project root and extend the desired configuration:
+### ESLint 8 (Legacy Config)
 
-### For Next.js projects:
+Create an `.eslintrc.js` file in your project root and extend the desired configuration:
+
+#### For Next.js projects:
 
 ```javascript
 module.exports = {
@@ -31,7 +42,7 @@ module.exports = {
 };
 ```
 
-### For library projects:
+#### For library projects:
 
 ```javascript
 module.exports = {
@@ -40,7 +51,7 @@ module.exports = {
 };
 ```
 
-### For internal React projects:
+#### For internal React projects:
 
 ```javascript
 module.exports = {
@@ -49,9 +60,37 @@ module.exports = {
 };
 ```
 
+### ESLint 9 (Flat Config)
+
+Create an `eslint.config.mjs` file in your project root:
+
+#### For Next.js projects:
+
+```javascript
+import nextConfig from "@aglaya/eslint-config/next";
+
+export default [
+  ...nextConfig,
+  // Add any project-specific overrides here
+];
+```
+
+#### For base configuration:
+
+```javascript
+import baseConfig from "@aglaya/eslint-config/base";
+
+export default [
+  ...baseConfig,
+  // Add any project-specific overrides here
+];
+```
+
 ## Extending the configuration
 
-You can extend or override any rules in your project's `.eslintrc.js` file. For example:
+### ESLint 8
+
+You can extend or override any rules in your project's `.eslintrc.js` file:
 
 ```javascript
 module.exports = {
@@ -62,6 +101,25 @@ module.exports = {
     "react/prop-types": "off",
   },
 };
+```
+
+### ESLint 9
+
+You can extend or override any rules in your `eslint.config.mjs` file:
+
+```javascript
+import nextConfig from "@aglaya/eslint-config/next";
+
+export default [
+  ...nextConfig,
+  {
+    rules: {
+      // Override or add additional rules here
+      "no-console": "warn",
+      "react/prop-types": "off",
+    },
+  },
+];
 ```
 
 ## TypeScript
