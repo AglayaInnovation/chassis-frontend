@@ -1,6 +1,6 @@
 {
   "name": "@aglaya/logger",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Lightweight logging utility for browser and Node.js",
   "license": "MIT",
   "main": "./dist/index.js",
