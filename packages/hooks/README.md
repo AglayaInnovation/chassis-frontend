@@ -1,6 +1,6 @@
-# useNavigationHistory
+# @aglaya/hooks
 
-A React hook for tracking navigation history in Next.js applications with timestamps and filtering capabilities.
+A collection of reusable React hooks for common functionality in modern web applications.
 
 ## Installation
 
@@ -12,7 +12,23 @@ yarn add @aglaya/hooks
 pnpm add @aglaya/hooks
 ```
 
-## Usage
+## Available Hooks
+
+- [useNavigationHistory](#usenavigationhistory) - Track navigation history in Next.js apps
+- [useOnlineStatus](#useonlinestatus) - Monitor internet connectivity
+- [useLocalStorage](#uselocalstorage) - Sync state with localStorage
+- [useDebounce](#usedebounce) - Debounce rapidly changing values
+- [useClickOutside](#useclickoutside) - Detect clicks outside an element
+- [useMedia](#usemedia) - Responsive media queries
+- [usePrevious](#useprevious) - Access previous value of state/props
+
+---
+
+## useNavigationHistory
+
+Track navigation history in Next.js applications with timestamps and filtering capabilities.
+
+### Usage
 
 ```tsx
 import { useNavigationHistory } from '@aglaya/hooks';
@@ -33,130 +49,286 @@ function MyComponent() {
         </button>
       )}
       <button onClick={clearHistory}>Clear History</button>
-
-      <h3>Navigation History</h3>
-      <ul>
-        {history.map((item, i) => (
-          <li key={i}>
-            {item.path} - {new Date(item.timestamp).toLocaleString()}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
 ```
 
-## API
+### API
 
-### Parameters
+**Parameters:**
+- `options?.maxHistory` (number, default: 20) - Maximum number of history items
+- `options?.excludePaths` (string[]) - Paths to exclude from tracking
 
-#### `options?: UseNavigationHistoryOptions`
+**Returns:**
+- `history` (NavigationHistoryItem[]) - Array of navigation items
+- `previousPath` (string | undefined) - Previous path in history
+- `canGoBack` (boolean) - Whether navigation back is possible
+- `clearHistory` (() => void) - Clear the history
 
-Optional configuration object:
+---
 
-- **`maxHistory`** (`number`, default: `20`): Maximum number of history items to keep
-- **`excludePaths`** (`string[]`, default: `[]`): Array of path prefixes to exclude from history tracking
+## useOnlineStatus
 
-### Return Value
+Monitor internet connectivity with optional polling to verify real connectivity.
 
-Returns a `UseNavigationHistoryResult` object:
-
-- **`history`** (`NavigationHistoryItem[]`): Array of navigation history items
-- **`previousPath`** (`string | undefined`): The previous path in history, or undefined if none
-- **`canGoBack`** (`boolean`): Whether there is a previous path to go back to
-- **`clearHistory`** (`() => void`): Function to clear the navigation history
-
-### Types
-
-```typescript
-interface NavigationHistoryItem {
-  path: string;
-  timestamp: number;
-}
-
-interface UseNavigationHistoryOptions {
-  maxHistory?: number;
-  excludePaths?: string[];
-}
-
-interface UseNavigationHistoryResult {
-  history: NavigationHistoryItem[];
-  previousPath: string | undefined;
-  canGoBack: boolean;
-  clearHistory: () => void;
-}
-```
-
-## Features
-
-- ✅ Tracks navigation history with timestamps
-- ✅ Configurable history size limit
-- ✅ Path exclusion filters
-- ✅ Prevents duplicate consecutive entries
-- ✅ TypeScript support
-- ✅ Next.js App Router compatible
-
-## Examples
-
-### Basic Usage
+### Usage
 
 ```tsx
-function Page() {
-  const { history, canGoBack } = useNavigationHistory();
+import { useOnlineStatus } from '@aglaya/hooks';
+
+function MyComponent() {
+  const { isOnline, isOffline } = useOnlineStatus({
+    enablePolling: true,
+    pollingInterval: 10000,
+    checkUrl: '/api/health'
+  });
 
   return (
     <div>
-      <p>Visited {history.length} pages</p>
-      {canGoBack && <p>Can go back!</p>}
+      {isOffline && (
+        <div className="alert">
+          You are currently offline. Some features may not be available.
+        </div>
+      )}
+      <p>Status: {isOnline ? 'Online' : 'Offline'}</p>
     </div>
   );
 }
 ```
 
-### Custom History Limit
+### API
+
+**Parameters:**
+- `options?.enablePolling` (boolean, default: false) - Enable connectivity polling
+- `options?.pollingInterval` (number, default: 30000) - Polling interval in ms
+- `options?.checkUrl` (string) - URL to check for connectivity
+
+**Returns:**
+- `isOnline` (boolean) - Whether the user is online
+- `isOffline` (boolean) - Whether the user is offline
+
+---
+
+## useLocalStorage
+
+Sync state with localStorage with automatic persistence and cross-tab synchronization.
+
+### Usage
 
 ```tsx
-function Page() {
-  const { history } = useNavigationHistory({ maxHistory: 5 });
+import { useLocalStorage } from '@aglaya/hooks';
 
-  // Only keeps last 5 pages
-  return <div>History size: {history.length}</div>;
-}
-```
-
-### Excluding Paths
-
-```tsx
-function Page() {
-  const { history } = useNavigationHistory({
-    excludePaths: ['/api', '/auth', '/admin']
-  });
-
-  // API, auth, and admin routes won't be tracked
-  return <div>{/* ... */}</div>;
-}
-```
-
-### Custom Back Button
-
-```tsx
-import { useRouter } from 'next/navigation';
-
-function CustomBackButton() {
-  const router = useRouter();
-  const { previousPath, canGoBack } = useNavigationHistory();
-
-  if (!canGoBack) return null;
+function ThemeToggle() {
+  const [theme, setTheme] = useLocalStorage('theme', 'light');
 
   return (
-    <button onClick={() => router.back()}>
-      ← Back to {previousPath}
+    <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+      Current theme: {theme}
     </button>
   );
 }
 ```
 
+### API
+
+**Parameters:**
+- `key` (string) - localStorage key
+- `initialValue` (T) - Initial value if not in localStorage
+
+**Returns:**
+- `[value, setValue]` - Tuple similar to useState
+
+**Features:**
+- ✅ Automatic persistence to localStorage
+- ✅ Cross-tab/window synchronization
+- ✅ SSR-safe (returns initialValue on server)
+- ✅ Error handling with fallback to initialValue
+- ✅ TypeScript support with generics
+
+---
+
+## useDebounce
+
+Debounce rapidly changing values to optimize performance.
+
+### Usage
+
+```tsx
+import { useDebounce } from '@aglaya/hooks';
+import { useState, useEffect } from 'react';
+
+function SearchComponent() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearch = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    if (debouncedSearch) {
+      // Perform search with debounced value
+      fetchSearchResults(debouncedSearch);
+    }
+  }, [debouncedSearch]);
+
+  return (
+    <input
+      type="text"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}
+```
+
+### API
+
+**Parameters:**
+- `value` (T) - Value to debounce
+- `delay` (number) - Delay in milliseconds
+
+**Returns:**
+- Debounced value
+
+---
+
+## useClickOutside
+
+Detect clicks outside of a specific element.
+
+### Usage
+
+```tsx
+import { useClickOutside } from '@aglaya/hooks';
+import { useRef, useState } from 'react';
+
+function Dropdown() {
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useClickOutside(dropdownRef, () => setIsOpen(false));
+
+  return (
+    <div ref={dropdownRef}>
+      <button onClick={() => setIsOpen(!isOpen)}>
+        Toggle Dropdown
+      </button>
+      {isOpen && (
+        <div className="dropdown-menu">
+          <a href="#">Item 1</a>
+          <a href="#">Item 2</a>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+### API
+
+**Parameters:**
+- `ref` (RefObject<HTMLElement>) - Ref to the element
+- `handler` (() => void) - Callback when clicking outside
+
+---
+
+## useMedia
+
+Responsive media query hook for conditional rendering based on screen size.
+
+### Usage
+
+```tsx
+import { useMedia } from '@aglaya/hooks';
+
+function ResponsiveComponent() {
+  const isMobile = useMedia('(max-width: 768px)');
+  const isTablet = useMedia('(min-width: 769px) and (max-width: 1024px)');
+  const isDesktop = useMedia('(min-width: 1025px)');
+
+  return (
+    <div>
+      {isMobile && <MobileView />}
+      {isTablet && <TabletView />}
+      {isDesktop && <DesktopView />}
+    </div>
+  );
+}
+```
+
+### API
+
+**Parameters:**
+- `query` (string) - Media query string
+
+**Returns:**
+- `matches` (boolean) - Whether the media query matches
+
+**Features:**
+- ✅ SSR-safe (returns false on server)
+- ✅ Automatically updates on window resize
+- ✅ Cleans up event listeners
+
+---
+
+## usePrevious
+
+Access the previous value of a state or prop.
+
+### Usage
+
+```tsx
+import { usePrevious } from '@aglaya/hooks';
+import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  const previousCount = usePrevious(count);
+
+  return (
+    <div>
+      <p>Current count: {count}</p>
+      <p>Previous count: {previousCount ?? 'None'}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+### API
+
+**Parameters:**
+- `value` (T) - Current value to track
+
+**Returns:**
+- Previous value (T | undefined)
+
+---
+
+## TypeScript Support
+
+All hooks are written in TypeScript and include full type definitions.
+
+```tsx
+import { useLocalStorage, useDebounce } from '@aglaya/hooks';
+
+// Type inference works automatically
+const [user, setUser] = useLocalStorage('user', { name: 'John', age: 30 });
+// user is typed as { name: string; age: number }
+
+// You can also specify types explicitly
+const [value, setValue] = useLocalStorage<string>('key', 'default');
+const debouncedValue = useDebounce<string>(searchTerm, 500);
+```
+
+## Requirements
+
+- React 18+
+- Next.js 14+ (for useNavigationHistory)
+
 ## License
 
 MIT
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
