@@ -1,6 +1,6 @@
 {
   "name": "@aglaya/ai-kit",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Standardized AI coding environment (Claude Code agents, skills, commands, hooks, settings) for Aglaya projects",
   "license": "MIT",
   "type": "module",
