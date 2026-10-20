@@ -1,0 +1,37 @@
+{
+  "name": "@aglaya/ai-kit",
+  "version": "0.0.0",
+  "description": "Standardized AI coding environment (Claude Code agents, skills, commands, hooks, settings) for Aglaya projects",
+  "license": "MIT",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AglayaInnovation/chassis-frontend.git",
+    "directory": "packages/ai-kit"
+  },
+  "bin": {
+    "aglaya-ai": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "templates"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "ai",
+    "claude",
+    "claude-code",
+    "agents",
+    "aglaya"
+  ],
+  "author": "Monster50",
+  "engines": {
+    "node": ">=18.17"
+  }
+}

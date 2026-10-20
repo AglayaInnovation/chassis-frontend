@@ -11,6 +11,7 @@ This monorepo includes the following packages and apps:
 - `examples`: a [Next.js](https://nextjs.org/) app showcasing UI components
 - `@aglaya/ui`: a React component library with reusable UI components (button, card, code)
 - `@aglaya/cli-tools`: CLI tools for project management
+- `@aglaya/ai-kit`: the team's AI coding environment (Claude Code agents, skills, commands, hooks, settings) installable in any project with `npx @aglaya/ai-kit init`
 - `@aglaya/eslint-config`: shared ESLint configurations
 - `@aglaya/typescript-config`: shared TypeScript configurations
 
