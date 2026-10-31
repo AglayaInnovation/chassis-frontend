@@ -18,9 +18,11 @@ export interface MethodOptions {
 export class ApiClient {
   private baseURL: string;
   private defaultHeaders: Record<string, string>;
+  private timeout?: number;
 
   constructor(config: ApiClientConfig) {
     this.baseURL = config.baseURL;
+    this.timeout = config.timeout;
     this.defaultHeaders = {
       "Content-Type": config.contentType || "application/json",
     };
@@ -37,6 +39,7 @@ export class ApiClient {
         url,
         baseURL: this.baseURL,
         defaultHeaders: this.defaultHeaders,
+        defaultOptions: { timeout: this.timeout },
       },
       {
         headers: config.headers,

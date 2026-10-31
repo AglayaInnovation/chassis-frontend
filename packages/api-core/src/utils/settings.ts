@@ -95,5 +95,9 @@ function buildFetchSettings(input: FetchCoreInput): FetchSettings {
  */
 export async function fetchCore(input: FetchCoreInput): Promise<Response> {
   const { fullURL, fetchConfig } = buildFetchSettings(input);
+  const timeout = input.options?.timeout ?? input.defaultOptions?.timeout;
+  if (timeout) {
+    fetchConfig.signal = AbortSignal.timeout(timeout);
+  }
   return fetch(fullURL, fetchConfig);
 }

@@ -59,8 +59,5 @@
     "ts-jest": "^29.2.5",
     "tsup": "^8.2.4",
     "typescript": "^5.5.3"
-  },
-  "dependencies": {
-    "node-fetch": "^3.3.2"
   }
 }
