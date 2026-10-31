@@ -22,6 +22,8 @@ export interface RequestOptions {
   requiredAuth?: boolean;
   requiredOtp?: boolean;
   retry?: RetryConfig;
+  /** Milliseconds before each attempt is aborted with an ApiError (code "TIMEOUT"). No timeout if omitted. */
+  timeout?: number;
 }
 
 export interface Authentication {

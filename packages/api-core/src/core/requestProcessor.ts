@@ -29,6 +29,41 @@ export interface RequestInput {
   authentication?: Authentication;
 }
 
+/**
+ * Builds an ApiError from a non-ok response, keeping the server's message and
+ * error code when the body is JSON ({ message, errorCode } or { message, code }).
+ */
+async function httpError(response: Response): Promise<ApiError> {
+  const body = (await response.json().catch(() => undefined)) as
+    | { message?: unknown; errorCode?: unknown; code?: unknown }
+    | undefined;
+  const message =
+    typeof body?.message === "string"
+      ? body.message
+      : `HTTP ${response.status}: ${response.statusText}`;
+  const code = body?.errorCode ?? body?.code;
+
+  return new ApiError(
+    message,
+    response.status,
+    typeof code === "string" ? code : "HTTP_ERROR",
+    body
+  );
+}
+
+/** Wraps a fetch failure (timeout, network) so callers only ever see ApiError. */
+function toApiError(error: unknown, timeout?: number): ApiError {
+  if (error instanceof ApiError) {
+    return error;
+  }
+  // Checked by name, not instanceof: the DOMException may come from another realm
+  const { name, message = String(error) } = (error ?? {}) as { name?: string; message?: string };
+  if (name === "TimeoutError") {
+    return new ApiError(`Request timed out after ${timeout}ms`, undefined, "TIMEOUT", error);
+  }
+  return new ApiError(`Network error: ${message}`, undefined, "NETWORK_ERROR", error);
+}
+
 export async function processRequest<T>(
   context: RequestContext,
   input: RequestInput = {}
@@ -61,31 +96,36 @@ export async function processRequest<T>(
 
   let response: Response;
 
-  // Apply retry logic if configured
-  if (options.retry) {
-    const retryOptions = mergeRetryOptions(options.retry);
-    response = await withRetry(
-      fetchOperation,
-      retryOptions,
-      MIN_ATTEMPTS,
-      (attempt, error) => {
-        // eslint-disable-next-line no-console
-        console.warn(
-          `Retry attempt ${attempt} for ${context.method} ${url}: ${error.message}`
-        );
-      }
-    );
-  } else {
-    response = await fetchOperation();
+  try {
+    // Apply retry logic if configured
+    if (options.retry) {
+      const retryOptions = mergeRetryOptions(options.retry);
+      response = await withRetry(
+        fetchOperation,
+        retryOptions,
+        MIN_ATTEMPTS,
+        (attempt, error) => {
+          // eslint-disable-next-line no-console
+          console.warn(
+            `Retry attempt ${attempt} for ${context.method} ${url}: ${error.message}`
+          );
+        }
+      );
+    } else {
+      response = await fetchOperation();
+    }
+  } catch (error) {
+    // withRetry rejects with the last non-ok response attached; handle it like any other
+    const failed = (error as { response?: Response }).response;
+    if (!failed) {
+      throw toApiError(error, options.timeout);
+    }
+    response = failed;
   }
 
   // Check response status
   if (!response.ok) {
-    throw new ApiError(
-      `HTTP ${response.status}: ${response.statusText}`,
-      response.status,
-      "HTTP_ERROR"
-    );
+    throw await httpError(response);
   }
 
   const data = (await response.json()) as T;
